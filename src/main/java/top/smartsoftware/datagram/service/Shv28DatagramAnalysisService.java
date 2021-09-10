@@ -7,7 +7,7 @@ import top.smartsoftware.datagram.model.shenghong.v28.SHPacket;
 import top.smartsoftware.datagram.model.shenghong.v28.ShCmd104;
 import top.smartsoftware.datagram.model.shenghong.v28.ShCmd202;
 import top.smartsoftware.datagram.model.shenghong.v28.ShCmd502;
-import top.smartsoftware.datagram.model.shenghong.v28.code.ShCmd504;
+import top.smartsoftware.datagram.model.shenghong.v28.ShCmd504;
 import top.smartsoftware.datagram.util.ByteUtility;
 import top.smartsoftware.datagram.util.ConstUtil;
 

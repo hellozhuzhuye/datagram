@@ -5,7 +5,6 @@ import top.smartsoftware.datagram.config.SHPacketConst;
 import top.smartsoftware.datagram.io.StreamReader;
 import top.smartsoftware.datagram.io.StreamWriter;
 import top.smartsoftware.datagram.model.BaseCommand;
-import top.smartsoftware.datagram.model.shenghong.v28.code.ShCmd504;
 import top.smartsoftware.datagram.util.StringUtility;
 
 public class SHPacket {
