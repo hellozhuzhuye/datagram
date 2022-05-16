@@ -10,7 +10,7 @@
     </parent>
     <groupId>top.smartsoft</groupId>
     <artifactId>datagram</artifactId>
-    <version>1.4-SNAPSHOT</version>
+    <version>1.5-SNAPSHOT</version>
     <name>datagram</name>
     <description>充电桩报文解析器</description>
     <properties>
