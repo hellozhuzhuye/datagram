@@ -1,17 +1,17 @@
 package top.smartsoftware.datagram.model.BO;
 
 public class HlhtDecryptBO {
-    private String encryptionData;
+    private String data;
     private Integer platformId; //为-1时为自定义密钥解密
     private String dataSecret;
     private String dataSecretIv;
 
-    public String getEncryptionData() {
-        return encryptionData;
+    public String getData() {
+        return data;
     }
 
-    public void setEncryptionData(String encryptionData) {
-        this.encryptionData = encryptionData;
+    public void setData(String data) {
+        this.data = data;
     }
 
     public Integer getPlatformId() {

@@ -38,7 +38,7 @@ public class HlhtDecryptService {
                 return CommonResponse.custom("自定义密钥不能为空",4001);
             }
             //自定义密钥解密
-            String decrypt = decrypt(hlhtDecryptBO.getEncryptionData(), hlhtDecryptBO.getDataSecret(), hlhtDecryptBO.getDataSecretIv());
+            String decrypt = decrypt(hlhtDecryptBO.getData(), hlhtDecryptBO.getDataSecret(), hlhtDecryptBO.getDataSecretIv());
             if (StringUtils.isEmpty(decrypt)){
                 return CommonResponse.custom("解密失败 请检查数据是否正确",4001);
             }
@@ -46,9 +46,31 @@ public class HlhtDecryptService {
         }else {
             String value = redisTemplate.opsForList().index(PLATFORM_SECRET_REDIS_KEY, hlhtDecryptBO.getPlatformId());
             PlatformSecretDTO platformSecretDTO = JSONUtil.toBean(value, PlatformSecretDTO.class);
-            String decrypt = decrypt(hlhtDecryptBO.getEncryptionData(), platformSecretDTO.getDataSecret(), platformSecretDTO.getDataSecretIv());
+            String decrypt = decrypt(hlhtDecryptBO.getData(), platformSecretDTO.getDataSecret(), platformSecretDTO.getDataSecretIv());
             if (StringUtils.isEmpty(decrypt)){
                 return CommonResponse.custom("解密失败 请检查数据是否正确",4001);
+            }
+            return CommonResponse.success(decrypt);
+        }
+    }
+
+    public CommonResponse getHlhtEncrypt(HlhtDecryptBO hlhtDecryptBO) {
+        if (hlhtDecryptBO.getPlatformId() == -1){
+            if (StringUtils.isEmpty(hlhtDecryptBO.getDataSecret()) || StringUtils.isEmpty(hlhtDecryptBO.getDataSecretIv())){
+                return CommonResponse.custom("自定义密钥不能为空",4001);
+            }
+            //自定义密钥加密
+            String decrypt = encrypt(hlhtDecryptBO.getData(), hlhtDecryptBO.getDataSecret(), hlhtDecryptBO.getDataSecretIv());
+            if (StringUtils.isEmpty(decrypt)){
+                return CommonResponse.custom("加密失败 请检查数据是否正确",4001);
+            }
+            return CommonResponse.success(decrypt);
+        }else {
+            String value = redisTemplate.opsForList().index(PLATFORM_SECRET_REDIS_KEY, hlhtDecryptBO.getPlatformId());
+            PlatformSecretDTO platformSecretDTO = JSONUtil.toBean(value, PlatformSecretDTO.class);
+            String decrypt = encrypt(hlhtDecryptBO.getData(), platformSecretDTO.getDataSecret(), platformSecretDTO.getDataSecretIv());
+            if (StringUtils.isEmpty(decrypt)){
+                return CommonResponse.custom("加密失败 请检查数据是否正确",4001);
             }
             return CommonResponse.success(decrypt);
         }
@@ -67,6 +89,7 @@ public class HlhtDecryptService {
         return CommonResponse.custom("没有密钥信息",4001);
     }
 
+    // 加密
     public static String encrypt(String sSrc, String sKey, String dataSecretIv) {
         try {
             byte[] raw = sKey.getBytes(StandardCharsets.UTF_8);
